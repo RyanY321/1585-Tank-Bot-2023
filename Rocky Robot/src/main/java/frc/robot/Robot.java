@@ -4,55 +4,53 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 
 /**
  * This is a demo program showing the use of the DifferentialDrive class, specifically it contains
  * the code necessary to operate a robot with tank drive.
  */
-public class Robot extends TimedRobot {
-  private DifferentialDrive m_myRobot;
-  private final VictorSP m_leftMotor = new VictorSP(0);
-  private final VictorSP m_rightMotor = new VictorSP(1);
-
-  private final Joystick m_controller = new Joystick(0);
-  //private final XboxController controller = new XboxController(0);
-  
-  //Potentially for future use. This may be used for the gripper. I think we should be able to use a neo brushless with a spark max.
-  //the can option can give us some telemetry (current and/or encoder counts)
-  private final CANSparkMax m_gripperMotor =  new CANSparkMax(0,MotorType.kBrushless);
+public class Robot extends TimedRobot 
+{
+  //Private variables 
+  private Joystick m_controller;
+  private Drive m_driveController;
+  private Pnumatics m_pnumatics;
+  private Gripper m_gripper;
 
 
-  
+  /**
+   * @implNote Robot Constructor
+   */
+  public Robot()
+  {
+    //Construct a joystic object on specified port
+    m_controller = new Joystick(0);
+    //Construct a differential drive
+    m_driveController = new Drive(0,1);
+    //Construct pnumatics
+    m_pnumatics = new Pnumatics();
+    //Construct a gripper that takes pnumatics
+    m_gripper = new Gripper(m_pnumatics);
+  }
+
+
   @Override
-  public void robotInit() {
-    // We need to invert one side of the drivetrain so that positive voltages
-    // result in both sides moving forward. Depending on how your robot's
-    // gearbox is constructed, you might have to invert the left side instead.
-    
-    //m_rightMotor.setInverted(true);
-
-    m_myRobot = new DifferentialDrive(m_leftMotor, m_rightMotor);
+  public void robotInit() 
+  {
+    //Initialize any other variables here
   }
 
   @Override
   public void teleopPeriodic() {
-    m_myRobot.arcadeDrive(-m_controller.getY(), -m_controller.getX()); 
 
-    // m_myRobot.tankDrive(-m_controller.getY(), m_controller.getY());
+    //Get the x and y values of the controller and send to the arcade drive
+    m_driveController.MoveArcade(-m_controller.getY(),-m_controller.getX());
+
+    //TODO: Check for other items such as pnumatic statuses, arm locations, etc.
+
   }
-
-  // public Boolean CountEncoder()
-  // {
-    
-  // }
 
 }
   
