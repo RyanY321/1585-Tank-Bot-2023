@@ -14,6 +14,7 @@ public class Drive {
     {
         m_leftMotor = new VictorSP(leftMotorChannel);
         m_rightMotor = new VictorSP(rightMotorChannel);
+        m_driveController = new DifferentialDrive(m_leftMotor, m_rightMotor);
     }
 
     /**

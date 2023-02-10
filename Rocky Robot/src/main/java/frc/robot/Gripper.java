@@ -14,12 +14,12 @@ public class Gripper
 
     public void OpenGripper()
     {
-
+        m_pnumatics.TriggerSolenoidA(true);
     }
 
     public void CloseGripper()
     {
-        
+        m_pnumatics.TriggerSolenoidA(false);
     }
     
 }

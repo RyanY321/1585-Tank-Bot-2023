@@ -25,29 +25,44 @@ public class Robot extends TimedRobot
    */
   public Robot()
   {
-    //Construct a joystic object on specified port
-    m_controller = new Joystick(0);
-    //Construct a differential drive
-    m_driveController = new Drive(0,1);
-    //Construct pnumatics
-    m_pnumatics = new Pnumatics();
-    //Construct a gripper that takes pnumatics
-    m_gripper = new Gripper(m_pnumatics);
+  
   }
 
 
   @Override
   public void robotInit() 
   {
-    //Initialize any other variables here
+      //Construct a joystic object on specified port
+      m_controller = new Joystick(0);
+      //Construct a differential drive
+      m_driveController = new Drive(0,1);
+      //Construct pnumatics
+      m_pnumatics = new Pnumatics();
+      //Construct a gripper that takes pnumatics
+      m_gripper = new Gripper(m_pnumatics);
+
+      //Initialize any other variables here
+      // m_pnumatics.EnableCompressor();
   }
 
   @Override
   public void teleopPeriodic() {
 
-    //Get the x and y values of the controller and send to the arcade drive
-    m_driveController.MoveArcade(-m_controller.getY(),-m_controller.getX());
+    if(m_driveController != null && m_controller != null)
+    {
+      //Get the x and y values of the controller and send to the arcade drive
+      m_driveController.MoveArcade(-m_controller.getY(),-m_controller.getX());
 
+      if (m_controller.getRawButtonPressed(6)){
+        m_gripper.OpenGripper();
+      } else {
+        m_gripper.CloseGripper();
+      }
+
+      // if (m_controller.getRawButtonPressed(4)){
+        // m_gripper.CloseGripper();
+      // }
+    }
     //TODO: Check for other items such as pnumatic statuses, arm locations, etc.
 
   }

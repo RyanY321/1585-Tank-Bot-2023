@@ -1,8 +1,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 
 
@@ -14,15 +16,18 @@ public class Pnumatics
 {
     //Compressor object
     private final Compressor m_compressor;
-    private final Solenoid m_solenoidA;
+    private final DoubleSolenoid m_solenoidA;
+    // private final Solenoid m_solenoidA;
     private final Solenoid m_SolenoidB;
 
     //TODO: add parameters to the constructor to allow for configuration. 
     public Pnumatics()
     {
         m_compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-        m_solenoidA = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
-        m_SolenoidB = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
+        m_solenoidA = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
+        m_solenoidA.set(Value.kOff);
+        // m_solenoidA = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
+        m_SolenoidB = new Solenoid(PneumaticsModuleType.CTREPCM, 2);
 
     }
 
@@ -93,10 +98,14 @@ public class Pnumatics
      * @implNote Toggle Solenoid A
      * @return state of Solenoid A , True = open, false = close
      */
-    public boolean TriggerSolenoidA()
+    public boolean TriggerSolenoidA(boolean isEnabled)
     {
-        m_solenoidA.toggle();
-        return m_solenoidA.get();
+        if (isEnabled){
+            m_solenoidA.set(Value.kForward);
+        } else {
+            m_solenoidA.set(Value.kOff);
+        }
+        return true;
     }
 
 
@@ -104,9 +113,9 @@ public class Pnumatics
      * @implNote Toggle Solenoid A
      * @return state of Solenoid B, True = open, False = close
      */
-    public boolean TriggerSolenoidB()
+    public boolean TriggerSolenoidB(boolean isEnabled)
     {
-        m_SolenoidB.toggle();
+        m_SolenoidB.set(isEnabled);
         return m_SolenoidB.get();
     }
     
