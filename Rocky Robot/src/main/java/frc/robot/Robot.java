@@ -40,8 +40,6 @@ public class Robot extends TimedRobot
       m_pnumatics = new Pnumatics();
       //Construct a gripper that takes pnumatics
       m_gripper = new Gripper(m_pnumatics);
-      //Contrusct an Xbox controller to Pneumatics
-      XboxController controller = new XboxController(1);
 
       //Initialize any other variables here
       // m_pnumatics.EnableCompressor();
