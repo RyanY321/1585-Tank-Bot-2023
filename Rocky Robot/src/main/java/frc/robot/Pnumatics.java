@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator.Validity;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -16,18 +18,18 @@ public class Pnumatics
 {
     //Compressor object
     private final Compressor m_compressor;
-    private final DoubleSolenoid m_solenoidA;
+    private final DoubleSolenoid m_gripperSolenoid;
     // private final Solenoid m_solenoidA;
-    private final Solenoid m_SolenoidB;
+    //private final Solenoid m_SolenoidB;
 
     //TODO: add parameters to the constructor to allow for configuration. 
     public Pnumatics()
     {
         m_compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-        m_solenoidA = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
-        m_solenoidA.set(Value.kOff);
+        m_gripperSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
+        m_gripperSolenoid.set(Value.kOff);
         // m_solenoidA = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
-        m_SolenoidB = new Solenoid(PneumaticsModuleType.CTREPCM, 2);
+       // m_SolenoidB = new Solenoid(PneumaticsModuleType.CTREPCM, 2);
 
     }
 
@@ -93,19 +95,33 @@ public class Pnumatics
         return GetCompressorState();
     }
 
-
     /**
      * @implNote Toggle Solenoid A
      * @return state of Solenoid A , True = open, false = close
      */
-    public boolean TriggerSolenoidA(boolean isEnabled)
+    public void TriggerGripperSolenoid(boolean isASideEnabled, boolean isBSideEnabled)
     {
-        if (isEnabled){
-            m_solenoidA.set(Value.kForward);
-        } else {
-            m_solenoidA.set(Value.kOff);
+        ///Check if the A Side of the solenoid needs to be triggered
+        if(isASideEnabled == true)
+        { 
+            m_gripperSolenoid.set(Value.kForward);
         }
-        return true;
+        else
+        {
+            m_gripperSolenoid.set(Value.kOff);
+        }
+
+
+        ///Check if the B side of the solenoid needs to be triggered
+        if(isBSideEnabled)
+        {
+            m_gripperSolenoid.set(Value.kReverse);
+        }
+        else
+        {
+            m_gripperSolenoid.set(Value.kOff);
+        }
+
     }
 
 
@@ -113,10 +129,10 @@ public class Pnumatics
      * @implNote Toggle Solenoid A
      * @return state of Solenoid B, True = open, False = close
      */
-    public boolean TriggerSolenoidB(boolean isEnabled)
-    {
-        m_SolenoidB.set(isEnabled);
-        return m_SolenoidB.get();
-    }
+    // public boolean TriggerSolenoidB(boolean isEnabled)
+    // {
+    //     m_SolenoidB.set(isEnabled);
+    //     return m_SolenoidB.get();
+    // }
     
 }

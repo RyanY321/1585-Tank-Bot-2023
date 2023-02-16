@@ -1,9 +1,12 @@
-package frc.robot;
+package Subsystems;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Drive {
+public class Drive extends SubsystemBase
+{ 
 
     private DifferentialDrive m_driveController;
     private final VictorSP m_leftMotor;
@@ -17,6 +20,16 @@ public class Drive {
         m_driveController = new DifferentialDrive(m_leftMotor, m_rightMotor);
     }
 
+    public CommandBase moveArcadeCommand(double xSpeed, double zRotation) {
+        // Inline construction of command goes here.
+        // Subsystem::RunOnce implicitly requires `this` subsystem.
+        return run(
+            () -> {
+                this.MoveArcade(xSpeed, zRotation);
+            });
+    }
+
+
     /**
      * @implNote Move the robot using arcade single joystick
      * @param xSpeed motor speed
@@ -26,5 +39,14 @@ public class Drive {
     {
         m_driveController.arcadeDrive(xSpeed, zRotation); 
     }
+    
+    @Override
+    public void periodic() {
+      // This method will be called once per scheduler run
+    }
   
+    @Override
+    public void simulationPeriodic() {
+      // This method will be called once per scheduler run during simulation
+    }
 }
