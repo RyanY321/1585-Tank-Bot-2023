@@ -37,12 +37,16 @@ public class Drive extends SubsystemBase
      */
     public void MoveArcade(double xSpeed, double zRotation)
     {
+        //This executes every 20ms so this fills up logs, only use when needed
+        //System.out.println(String.format("Robot Move, speed %.2f, rotation %.2f", xSpeed,zRotation));
         m_driveController.arcadeDrive(xSpeed, zRotation); 
     }
-    
+
     @Override
+
     public void periodic() {
       // This method will be called once per scheduler run
+     
     }
   
     @Override

@@ -26,7 +26,7 @@ public class Pnumatics
     public Pnumatics()
     {
         m_compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-        m_gripperSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
+        m_gripperSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 1);
         m_gripperSolenoid.set(Value.kOff);
         // m_solenoidA = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
        // m_SolenoidB = new Solenoid(PneumaticsModuleType.CTREPCM, 2);
@@ -102,24 +102,24 @@ public class Pnumatics
     public void TriggerGripperSolenoid(boolean isASideEnabled, boolean isBSideEnabled)
     {
         ///Check if the A Side of the solenoid needs to be triggered
-        if(isASideEnabled == true)
+        if(isASideEnabled)
         { 
-            m_gripperSolenoid.set(Value.kForward);
+            m_gripperSolenoid.set(DoubleSolenoid.Value.kForward);
         }
         else
         {
-            m_gripperSolenoid.set(Value.kOff);
+            m_gripperSolenoid.set(DoubleSolenoid.Value.kOff);
         }
 
 
         ///Check if the B side of the solenoid needs to be triggered
         if(isBSideEnabled)
         {
-            m_gripperSolenoid.set(Value.kReverse);
+            m_gripperSolenoid.set(DoubleSolenoid.Value.kReverse);
         }
         else
         {
-            m_gripperSolenoid.set(Value.kOff);
+            m_gripperSolenoid.set(DoubleSolenoid.Value.kOff);
         }
 
     }

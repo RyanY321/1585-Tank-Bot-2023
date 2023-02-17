@@ -1,57 +1,74 @@
 package frc.robot;
+
 import Subsystems.Drive;
 import Subsystems.Gripper;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import Subsystems.IO;
+import Commands.DriveCommand;
+import Subsystems.Arm;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-public class RobotContainer 
-{ 
-  private CommandJoystick m_controller =  new CommandJoystick(0);
-  private Drive m_driveController  = new Drive(0,1);
+public class RobotContainer {
+  private IO m_controller = new IO();
+  private Drive m_driveController = new Drive(0, 1);
   private Pnumatics m_pnumatics = new Pnumatics();
   private Gripper m_gripper = new Gripper(m_pnumatics);
 
-  //private DriveCommand m_driveRobotCommand;
-  private RunCommand m_driveRobotCommand;
-  // private Trigger m_gripperOpenBtn;
-  // private Trigger m_gripperCloseBtn;
-  // private Command m_gripperBtnCommand;
+  // TODO: Figure out what the motor channels will be
+  private Arm m_arm = new Arm(2, 3, 4);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  // private DriveCommand m_driveRobotCommand;
+  private DriveCommand m_DriveCommand = new DriveCommand(m_driveController, m_controller);
+
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
   }
 
   /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+   * Use this method to define your trigger->command mappings. Triggers can be
+   * created via the
+   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+   * an arbitrary
    * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
+   * {@link
+   * CommandXboxController
+   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+   * PS4} controllers or
+   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    // new Trigger()::exampleCondition)
-    //     .onTrue(new ExampleCommand(m_exampleSubsystem));
 
+    // Schedule the drive controller to move
+    m_driveController.setDefaultCommand(m_DriveCommand);
 
-    //Schedule axis to move robot
-    m_driveRobotCommand = new RunCommand(() -> m_driveController.moveArcadeCommand(
-    m_controller.getY(),
-    m_controller.getX()), m_driveController);
+    // schedule button 6 to open gripper while it is pushed
+    m_controller.GetOpenGripperBtn().whileTrue(m_gripper.openGripperCommand());
+    m_controller.GetOpenGripperBtn().onFalse(m_gripper.StopGrippercommand());
 
-  
-    //schedule button 6 to open gripper while it is pushed
-    m_controller.button(6).whileTrue(m_gripper.openGripperCommand());
+    // schedule button 4 to close gripper while it is pushed
+    m_controller.GetCloseGripperBtn().whileTrue(m_gripper.closeGrippercommand());
+    m_controller.GetCloseGripperBtn().onFalse(m_gripper.StopGrippercommand());
 
-    //schedule button 4 to close gripper while it is pushed
-    m_controller.button(4).whileTrue(m_gripper.closeGrippercommand());
-    //m_gripperCloseBtn = new JoystickButton(m_controller,4).whileTrue(m_gripper.closeGrippercommand());
+    // TODO: Determine which button should extend the arm, create new functions in
+    // the IO class and copy above structure
+    m_controller.GetRaiseArmBtn().whileTrue(m_arm.liftArmCommand());
+    m_controller.GetRaiseArmBtn().onFalse(m_arm.stopArmLiftCommand());
+
+    m_controller.GetLowerArmBtn().whileTrue(m_arm.lowerArmCommand());
+    m_controller.GetLowerArmBtn().onFalse(m_arm.stopArmLiftCommand());
+
+    // TODO: Determine which button should retract the arm
+    m_controller.GetExtendArmBtn().whileTrue(m_arm.extendArmCommand());
+    m_controller.GetExtendArmBtn().onFalse(m_arm.stopArmExtendCommand());
+
+    m_controller.GetRetractArmBtn().whileTrue(m_arm.retractArmCommand());
+    m_controller.GetRetractArmBtn().onFalse(m_arm.stopArmExtendCommand());
 
   }
 
@@ -60,8 +77,8 @@ public class RobotContainer
    *
    * @return the command to run in autonomous
    */
- // public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    //return Autos.exampleAuto(m_exampleSubsystem);
-  //}
+  // public Command getAutonomousCommand() {
+  // An example command will be run in autonomous
+  // return Autos.exampleAuto(m_exampleSubsystem);
+  // }
 }

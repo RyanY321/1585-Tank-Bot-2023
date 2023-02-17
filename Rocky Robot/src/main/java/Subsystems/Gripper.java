@@ -1,36 +1,49 @@
 package Subsystems;
 
 import frc.robot.Pnumatics;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 //TODO : This is a stub class for a gripper. We will 
 // need to fill in code with real implementations
-
 public class Gripper extends SubsystemBase
 {
     private final Pnumatics m_pnumatics;
 
     /**
-     * Example command factory method.
+     * Open Gripper command factory
      *
      * @return a command
      */
     public CommandBase openGripperCommand() {
-        // Inline construction of command goes here.
-        // Subsystem::RunOnce implicitly requires `this` subsystem.
-        return runOnce(
+        return run(
             () -> {
                 this.OpenGripper();
             });
     }
 
+    /**
+     * Close Gripper command factory
+     *
+     * @return a command
+     */
     public CommandBase closeGrippercommand() {
-        // Inline construction of command goes here.
-        // Subsystem::RunOnce implicitly requires `this` subsystem.
-        return runOnce(
+        return run(
             () -> {
                 this.CloseGripper();
+            });
+    }
+
+    /**
+     * Close Gripper command factory
+     *
+     * @return a command
+     */
+    public CommandBase StopGrippercommand() {
+        return runOnce(
+            () -> {
+                this.StopGripper();
             });
     }
 
@@ -39,14 +52,22 @@ public class Gripper extends SubsystemBase
         m_pnumatics = pnumatics;
     }
 
-    public void OpenGripper()
+    private void OpenGripper()
     {
+        System.out.println("Opening Gripper");
         m_pnumatics.TriggerGripperSolenoid(true,false);
     }
 
-    public void CloseGripper()
+    private void CloseGripper()
     {
+        System.out.println("Closing Gripper");
         m_pnumatics.TriggerGripperSolenoid(false,true);
+    }
+
+    private void StopGripper()
+    {
+        System.out.println("Stop Gripper");
+        m_pnumatics.TriggerGripperSolenoid(false,false);
     }
 
     @Override
