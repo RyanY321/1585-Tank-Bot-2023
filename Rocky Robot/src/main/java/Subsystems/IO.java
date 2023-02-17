@@ -1,6 +1,7 @@
 package Subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -17,8 +18,8 @@ public class IO extends SubsystemBase
 
 
     //TODO: Swap between xbox and joystick
-    //private CommandJoystick m_controller =  new CommandJoystick(0);
-    private CommandXboxController m_controller = new CommandXboxController(0);
+    private CommandJoystick m_joystickController =  new CommandJoystick(0);
+    private CommandXboxController m_controller = new CommandXboxController(1);
 
     public IO()
     {
@@ -32,7 +33,8 @@ public class IO extends SubsystemBase
       */
     public double GetX()
     {
-        return m_controller.getLeftX();
+        //TODO: Get and return the x value from the joystick
+        return 0.0;
     }
 
     /**
@@ -41,7 +43,9 @@ public class IO extends SubsystemBase
      */
     public double GetY()
     {
-        return m_controller.getLeftY();
+       // return m_controller.getLeftY();
+       //TODO: get and return the y value from the joystick
+       return 0.0;
     }
 
 
