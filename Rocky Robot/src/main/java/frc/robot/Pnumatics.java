@@ -26,7 +26,7 @@ public class Pnumatics
     public Pnumatics()
     {
         m_compressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-        m_gripperSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 1);
+        m_gripperSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 2);
         m_gripperSolenoid.set(Value.kOff);
         // m_solenoidA = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
        // m_SolenoidB = new Solenoid(PneumaticsModuleType.CTREPCM, 2);
