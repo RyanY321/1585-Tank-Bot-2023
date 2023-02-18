@@ -35,7 +35,7 @@ public class DriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_driveSubsystem.MoveArcade(m_controller.GetX(), m_controller.GetY());
+    m_driveSubsystem.MoveArcade(-m_controller.GetY(), -m_controller.GetX());
   }
 
   // Called once the command ends or is interrupted.

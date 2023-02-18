@@ -1,11 +1,7 @@
 package frc.robot;
-
-import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator.Validity;
-
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 
@@ -105,23 +101,13 @@ public class Pnumatics
         if(isASideEnabled)
         { 
             m_gripperSolenoid.set(DoubleSolenoid.Value.kForward);
-        }
-        else
-        {
-            m_gripperSolenoid.set(DoubleSolenoid.Value.kOff);
-        }
-
-
-        ///Check if the B side of the solenoid needs to be triggered
-        if(isBSideEnabled)
-        {
+        } else if (isBSideEnabled){
             m_gripperSolenoid.set(DoubleSolenoid.Value.kReverse);
         }
         else
         {
             m_gripperSolenoid.set(DoubleSolenoid.Value.kOff);
         }
-
     }
 
 

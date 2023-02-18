@@ -9,8 +9,8 @@ public class IO extends SubsystemBase
 {
 
     //TODO : create variables for the buttons for other subsystem such as the arm, modify to correct button mapping
-    private final int gripperCloseButton = 4;
-    private final int gripperOpenButton = 6;
+    private final int gripperCloseButton = 2;
+    private final int gripperOpenButton = 1;
     private final int raiseArmBtn = 1;
     private final int lowerArmBtn = 2;
     private final int extendArmBtn = 3;
@@ -33,8 +33,7 @@ public class IO extends SubsystemBase
       */
     public double GetX()
     {
-        //TODO: Get and return the x value from the joystick
-        return 0.0;
+        return m_joystickController.getX();
     }
 
     /**
@@ -43,9 +42,7 @@ public class IO extends SubsystemBase
      */
     public double GetY()
     {
-       // return m_controller.getLeftY();
-       //TODO: get and return the y value from the joystick
-       return 0.0;
+       return m_joystickController.getY();
     }
 
 
