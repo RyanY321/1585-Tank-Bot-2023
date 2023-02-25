@@ -2,12 +2,13 @@ package Subsystems;
 
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+// import com.revrobotics.CANSparkMax;
+// import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 //TODO: this is a stub class that needs implementation. I have
@@ -16,12 +17,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class Arm extends SubsystemBase
 {
     //TODO : Need to determine actual motor controllers and swap out
-    private final VictorSP m_liftMotor;
+    private final PWMSparkMax m_liftMotor;
+    // private final VictorSP m_liftMotor
     private final VictorSP m_extendMotor;
 
     //This can be the winch motor controller. We can setup this controller to have a closed
     //loop setup where we tie in the endstops that way we dont have to keep track of them
-    private final CANSparkMax m_winchMotor;
+    private final PWMSparkMax m_winchMotor;
+    // private final CANSparkMax m_winchMotor
 
 
     private final Relay m_testLiftMotor = new Relay(0);
@@ -32,9 +35,11 @@ public class Arm extends SubsystemBase
             int winchMotorDeviceId)
     {
         //TODO: Build correct motor controllers for the motors to be installed
-        m_liftMotor = new VictorSP(liftMotorChannel);
+        // m_liftMotor = new VictorSP(liftMotorChannel);
+        m_liftMotor = new PWMSparkMax(3);
         m_extendMotor = new VictorSP(extendMotorChannel);
-        m_winchMotor=  new CANSparkMax(winchMotorDeviceId,MotorType.kBrushed);
+        // m_winchMotor=  new CANSparkMax(winchMotorDeviceId,MotorType.kBrushed);
+        m_winchMotor = new PWMSparkMax(2);
     }
 
 
