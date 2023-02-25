@@ -11,10 +11,10 @@ public class IO extends SubsystemBase
     //TODO : create variables for the buttons for other subsystem such as the arm, modify to correct button mapping
     private final int gripperCloseButton = 2;
     private final int gripperOpenButton = 1;
-    private final int raiseArmBtn = 1;
-    private final int lowerArmBtn = 2;
-    private final int extendArmBtn = 3;
-    private final int retractArmBtn = 5;
+    private final int raiseArmBtn = 5;
+    private final int lowerArmBtn = 6;
+    private final int extendArmBtn = 4;
+    private final int retractArmBtn = 3;
 
 
     //TODO: Swap between xbox and joystick
