@@ -7,6 +7,7 @@ import Commands.DriveCommand;
 import Subsystems.Arm;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.cameraserver.CameraServer;
 
 public class RobotContainer {
   private IO m_controller = new IO();
@@ -15,7 +16,7 @@ public class RobotContainer {
   private Gripper m_gripper = new Gripper(m_pnumatics);
 
   // TODO: Figure out what the motor channels will be
-  private Arm m_arm = new Arm(2, 3, 4);
+  private Arm m_arm = new Arm(5, 4);
 
   // private DriveCommand m_driveRobotCommand;
   private DriveCommand m_DriveCommand = new DriveCommand(m_driveController, m_controller);
@@ -26,6 +27,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+  CameraServer.startAutomaticCapture();
   }
 
   /**

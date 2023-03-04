@@ -18,28 +18,30 @@ public class Arm extends SubsystemBase
 {
     //TODO : Need to determine actual motor controllers and swap out
     private final PWMSparkMax m_liftMotor;
-    // private final VictorSP m_liftMotor
-    private final VictorSP m_extendMotor;
+    //private final VictorSP m_liftMotor;
+    //private final VictorSP m_extendMotor;
+    private final PWMSparkMax m_extendMotor;
 
     //This can be the winch motor controller. We can setup this controller to have a closed
     //loop setup where we tie in the endstops that way we dont have to keep track of them
-    private final PWMSparkMax m_winchMotor;
+    // private final PWMSparkMax m_winchMotor;
     // private final CANSparkMax m_winchMotor
 
 
-    private final Relay m_testLiftMotor = new Relay(0);
-    private final Relay m_testExtendMotor = new Relay(1);
+    //private final Relay m_testLiftMotor = new Relay(0);
+    //private final Relay m_testExtendMotor = new Relay(1);
 
     public Arm(int liftMotorChannel, 
-            int extendMotorChannel,
-            int winchMotorDeviceId)
+            int extendMotorChannel)
+            // int winchMotorDeviceId)
     {
         //TODO: Build correct motor controllers for the motors to be installed
         // m_liftMotor = new VictorSP(liftMotorChannel);
-        m_liftMotor = new PWMSparkMax(3);
-        m_extendMotor = new VictorSP(extendMotorChannel);
+        m_liftMotor = new PWMSparkMax(liftMotorChannel);
+        // m_extendMotor = new VictorSP(extendMotorChannel);
+        m_extendMotor = new PWMSparkMax(extendMotorChannel);
         // m_winchMotor=  new CANSparkMax(winchMotorDeviceId,MotorType.kBrushed);
-        m_winchMotor = new PWMSparkMax(2);
+        // m_winchMotor = new PWMSparkMax(2);
     }
 
 
@@ -92,7 +94,8 @@ public class Arm extends SubsystemBase
     private void ExtendArm()
     {
         System.out.println("Extending Arm");
-        m_testExtendMotor.set(Relay.Value.kForward);
+        m_extendMotor.set(0.75);
+        // m_testExtendMotor.set(Relay.Value.kForward);
     }
     
     /**
@@ -101,7 +104,8 @@ public class Arm extends SubsystemBase
     private void RetractArm()
     {
         System.out.println("Retracting Arm");
-        m_testExtendMotor.set(Relay.Value.kReverse);
+        m_extendMotor.set(-0.75);
+        // m_testExtendMotor.set(Relay.Value.kReverse);
     }
 
     
@@ -112,7 +116,8 @@ public class Arm extends SubsystemBase
     private void LiftArm()
     {
         System.out.println("Lift Arm");
-        m_testLiftMotor.set(Relay.Value.kForward);
+        m_liftMotor.set(0.75);
+        //m_testLiftMotor.set(Relay.Value.kForward);
     }
 
     /**
@@ -122,19 +127,20 @@ public class Arm extends SubsystemBase
     private void LowerArm()
     {
         System.out.println("Lower Arm");
-        m_testLiftMotor.set(Relay.Value.kReverse);
+        m_liftMotor.set(-0.75);
+        // m_testLiftMotor.set(Relay.Value.kReverse);
     }
 
     private void StopArmLift()
     {
         System.out.println("Arm Lift Stopped");
-        m_testLiftMotor.set(Relay.Value.kOff);
+        m_liftMotor.set(0.00);
     }
 
     private void StopArmExtend()
     {
         System.out.println("Arm Extension stopped");
-        m_testExtendMotor.set(Relay.Value.kOff);
+        m_extendMotor.set(0.00);
     }
 
     @Override
