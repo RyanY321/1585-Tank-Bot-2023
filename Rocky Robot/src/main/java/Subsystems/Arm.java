@@ -94,7 +94,7 @@ public class Arm extends SubsystemBase
     private void ExtendArm()
     {
         System.out.println("Extending Arm");
-        m_extendMotor.set(0.75);
+        m_extendMotor.set(0.80);
         // m_testExtendMotor.set(Relay.Value.kForward);
     }
     
@@ -104,7 +104,7 @@ public class Arm extends SubsystemBase
     private void RetractArm()
     {
         System.out.println("Retracting Arm");
-        m_extendMotor.set(-0.75);
+        m_extendMotor.set(-0.80);
         // m_testExtendMotor.set(Relay.Value.kReverse);
     }
 
@@ -116,7 +116,7 @@ public class Arm extends SubsystemBase
     private void LiftArm()
     {
         System.out.println("Lift Arm");
-        m_liftMotor.set(0.75);
+        m_liftMotor.set(0.30);
         //m_testLiftMotor.set(Relay.Value.kForward);
     }
 
@@ -127,7 +127,7 @@ public class Arm extends SubsystemBase
     private void LowerArm()
     {
         System.out.println("Lower Arm");
-        m_liftMotor.set(-0.75);
+        m_liftMotor.set(-0.20);
         // m_testLiftMotor.set(Relay.Value.kReverse);
     }
 
