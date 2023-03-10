@@ -35,6 +35,7 @@ public class Arm extends SubsystemBase
             int extendMotorChannel)
             // int winchMotorDeviceId)
     {
+
         //TODO: Build correct motor controllers for the motors to be installed
         // m_liftMotor = new VictorSP(liftMotorChannel);
         m_liftMotor = new PWMSparkMax(liftMotorChannel);
@@ -63,7 +64,7 @@ public class Arm extends SubsystemBase
     public CommandBase liftArmCommand() {
         return run(
             () -> {
-                this.LiftArm();
+                this.LiftArm(0);
             });
     }
 
@@ -105,7 +106,6 @@ public class Arm extends SubsystemBase
     {
         System.out.println("Retracting Arm");
         m_extendMotor.set(-0.80);
-        // m_testExtendMotor.set(Relay.Value.kReverse);
     }
 
     
@@ -113,10 +113,10 @@ public class Arm extends SubsystemBase
      * @implNote Lift the arm
      * @param pulses
      */
-    private void LiftArm()
+    public void LiftArm(double speed)
     {
         System.out.println("Lift Arm");
-        m_liftMotor.set(0.30);
+        m_liftMotor.set(speed);
         //m_testLiftMotor.set(Relay.Value.kForward);
     }
 

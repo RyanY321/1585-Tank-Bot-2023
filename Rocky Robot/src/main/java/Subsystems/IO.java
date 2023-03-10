@@ -105,6 +105,11 @@ public class IO extends SubsystemBase
         return m_controller.button(retractArmBtn);
     }
 
+    public double GetLiftArmValue()
+    {
+        return m_controller.getLeftTriggerAxis();
+    }
+
 
 
     @Override

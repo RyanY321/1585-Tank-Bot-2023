@@ -5,6 +5,7 @@ import Subsystems.Gripper;
 import Subsystems.IO;
 
 import Commands.DriveCommand;
+import Commands.ArmCommand;
 import Commands.DriveAutoCommand;
 import Subsystems.Arm;
 import Subsystems.Auto;
@@ -33,7 +34,10 @@ public class RobotContainer {
   private Pnumatics m_pnumatics = new Pnumatics();
   private Gripper m_gripper = new Gripper(m_pnumatics);
   private Arm m_arm = new Arm(5, 4);
+
+  private ArmCommand m_ArmCommand = new ArmCommand(m_arm, m_controller);
   private DriveCommand m_DriveCommand = new DriveCommand(m_driveController, m_controller);
+
   private Auto m_auto = new Auto(m_driveController);
 
   private SequentialCommandGroup m_progOneAuto = new SequentialCommandGroup();
@@ -76,20 +80,14 @@ private DifferentialDriveOdometry m_odometry;
 
     //Setup basic autonomous commands one
     m_progOneAuto.addCommands(
-      new DriveAutoCommand(m_driveController, .50, .50),
-      new WaitCommand(10),
       new DriveAutoCommand(m_driveController, -.50, -.50),
-      new WaitCommand(10),
+      new WaitCommand(5),
       new DriveAutoCommand(m_driveController, 0, 0)
     );
 
     m_progTwoAuto.addCommands(
-      new DriveAutoCommand(m_driveController, .50, .50), //Forward
-      new WaitCommand(3),
-      new DriveAutoCommand(m_driveController, -.50, .50), //Left
-      new WaitCommand(.25),
-      new DriveAutoCommand(m_driveController, .50, .50),
-      new WaitCommand(4),
+      new DriveAutoCommand(m_driveController, .50, .50), //Left
+      new WaitCommand(5),
       new DriveAutoCommand(m_driveController, 0, 0)
     );
 
@@ -131,6 +129,7 @@ private DifferentialDriveOdometry m_odometry;
 
     // Schedule the drive controller to move
     m_driveController.setDefaultCommand(m_DriveCommand);
+    m_arm.setDefaultCommand(m_ArmCommand);
 
     //Gripper Close Button
     m_controller.GetOpenGripperBtn().whileTrue(m_gripper.openGripperCommand());
@@ -141,8 +140,8 @@ private DifferentialDriveOdometry m_odometry;
     m_controller.GetCloseGripperBtn().onFalse(m_gripper.StopGrippercommand());
 
     //Raise Arm button
-    m_controller.GetRaiseArmBtn().whileTrue(m_arm.liftArmCommand());
-    m_controller.GetRaiseArmBtn().onFalse(m_arm.stopArmLiftCommand());
+    // m_controller.GetRaiseArmBtn().whileTrue(m_arm.liftArmCommand());
+    // m_controller.GetRaiseArmBtn().onFalse(m_arm.stopArmLiftCommand());
 
     //Lower Arm Button
     m_controller.GetLowerArmBtn().whileTrue(m_arm.lowerArmCommand());
