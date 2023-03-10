@@ -33,7 +33,8 @@ public class IO extends SubsystemBase
       */
     public double GetX()
     {
-        return m_joystickController.getX();
+        return m_controller.getLeftX();
+        //return m_joystickController.getX();
     }
 
     /**
@@ -42,7 +43,8 @@ public class IO extends SubsystemBase
      */
     public double GetY()
     {
-       return m_joystickController.getY();
+        return m_controller.getLeftY();
+       //return m_joystickController.getY();
     }
 
 

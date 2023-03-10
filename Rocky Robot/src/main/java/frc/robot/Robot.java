@@ -5,6 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -24,6 +27,14 @@ public class Robot extends TimedRobot
 
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;  
+  
+
+  private static final String programOneAuto = "Program One";
+  private static final String programTwoAuto = "Program Two";
+  private String m_autoSelected;
+  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
+  private Field2d m_field;
 
 
   /**
@@ -38,50 +49,17 @@ public class Robot extends TimedRobot
   @Override
   public void robotInit() 
   {
-      //Construct a joystic object on specified port
-      //m_controller = new Joystick(0);
-      //Construct a differential drive
-      //m_driveController = new Drive(0,1);
-      //Construct pnumatics
-      //m_pnumatics = new Pnumatics();
-      //Construct a gripper that takes pnumatics
-      //m_gripper = new Gripper(m_pnumatics);
 
-      //Initialize any other variables here
-      // m_pnumatics.EnableCompressor();
+      m_chooser.setDefaultOption("Program One", programOneAuto);
+      m_chooser.addOption("Program Two", programTwoAuto);
+      SmartDashboard.putData("Auto choices", m_chooser);
 
-      // m_gripperBtnCommand = new Command() {
-      //   return this.runOnce(() => m_gripper.OpenGripper());
-      // };
-      // m_gripperBtn = new JoystickButton(m_controller,6).whileTrue(m_gripper.OpenGripper());
-
+      m_field = new Field2d();
+      SmartDashboard.putData("Sim Field", m_field);
   }
 
   @Override
   public void teleopPeriodic() {
-
-    //---------- Below is to move the robot with out using the command framework ------
-    // if(m_driveController != null && m_controller != null)
-    // {
-    //   //Get the x and y values of the controller and send to the arcade drive
-    //   m_driveController.MoveArcade(-m_controller.getY(),-m_controller.getX());
-
-    //   if (m_controller.getRawButtonPressed(6)){
-    //     m_gripper.OpenGripper();
-    //   } else {
-    //     m_gripper.CloseGripper();
-    //   }
-
-    //   if (m_controller.getRawButtonPressed(4)){
-    //     m_gripper.CloseGripper();
-    //   } else {
-    //     m_gripper.OpenGripper();
-    //   }
-    // }
-    //TODO: Check for other items such as pnumatic statuses, arm locations, etc.
-
-    
-
   }
 
   public void robotPeriodic() {
@@ -102,17 +80,20 @@ public class Robot extends TimedRobot
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autoSelected = m_chooser.getSelected();
+    System.out.println("Auto selected: " + m_autoSelected);
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand(m_autoSelected);
 
-    // // schedule the autonomous command (example)
-    // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.schedule();\\
-    // }
+    // schedule the autonomous command (example)
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+  }
 
   @Override
   public void teleopInit() {
@@ -135,13 +116,20 @@ public class Robot extends TimedRobot
   @Override
   public void testPeriodic() {}
 
+
   /** This function is called once when the robot is first started up. */
   @Override
-  public void simulationInit() {}
+  public void simulationInit() {
+   
+  }
 
   /** This function is called periodically whilst in simulation. */
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+    m_robotContainer.SimPeriodic();
+    m_field.setRobotPose(m_robotContainer.GetPoseMeters());
+
+  }
 
 }
   

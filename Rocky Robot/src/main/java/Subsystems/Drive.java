@@ -18,6 +18,9 @@ public class Drive extends SubsystemBase
         m_leftMotor = new VictorSP(leftMotorChannel);
         m_rightMotor = new VictorSP(rightMotorChannel);
         m_driveController = new DifferentialDrive(m_leftMotor, m_rightMotor);
+        m_driveController.setSafetyEnabled(false);
+        m_driveController.setExpiration(0.1);
+        m_driveController.setMaxOutput(1.0);
     }
 
     public CommandBase moveArcadeCommand(double xSpeed, double zRotation) {
@@ -40,6 +43,21 @@ public class Drive extends SubsystemBase
         //This executes every 20ms so this fills up logs, only use when needed
         //System.out.println(String.format("Robot Move, speed %.2f, rotation %.2f", xSpeed,zRotation));
         m_driveController.arcadeDrive(xSpeed, zRotation); 
+    }
+
+    public void MoveTank(double leftSpeed, double rightSpeed)
+    {
+        m_driveController.tankDrive(leftSpeed, rightSpeed);
+    }
+
+    public double GetLeft()
+    {
+        return m_leftMotor.get();
+    }
+
+    public double GetRight()
+    {
+        return m_rightMotor.get();
     }
 
     @Override
