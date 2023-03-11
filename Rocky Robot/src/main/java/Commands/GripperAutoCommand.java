@@ -1,12 +1,12 @@
 package Commands;
 
-import Subsystems.Drive;
+import Subsystems.Gripper;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** Drive auto cammand used for autonomous movements */
-public class DriveAutoCommand extends CommandBase {
+public class GripperAutoCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Drive m_driveSubsystem; 
+  private final Gripper m_gripperSubsystem; 
   private double m_leftSpeed;
   private double m_rightSpeed; 
   private boolean m_isFinished = false;
@@ -16,14 +16,12 @@ public class DriveAutoCommand extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveAutoCommand(Drive driveSubsystem, double leftSpeed, double rightSpeed) {
+  public GripperAutoCommand(Gripper gripperSubsystem) {
     //super(waitTime);
-    m_driveSubsystem = driveSubsystem;
-    m_leftSpeed = leftSpeed;
-    m_rightSpeed = rightSpeed;
+    m_gripperSubsystem = gripperSubsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(driveSubsystem);
+    addRequirements(gripperSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -35,8 +33,9 @@ public class DriveAutoCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(String.format("Moving Auto : Move :  %f %f", m_leftSpeed,m_rightSpeed ));
-    m_driveSubsystem.MoveTank(m_leftSpeed,m_rightSpeed);
+   // System.out.println(String.format("Moving Auto : Move :  %f %f", m_leftSpeed,m_rightSpeed ));
+    //m_driveSubsystem.MoveTank(m_leftSpeed,m_rightSpeed);
+    m_gripperSubsystem.OpenGripper();
     m_isFinished = true;
   }
   
@@ -47,7 +46,7 @@ public class DriveAutoCommand extends CommandBase {
     if(interrupted)
     {
       System.out.println("Auto Motors stopped");
-      m_driveSubsystem.MoveTank(0, 0);
+      //m_driveSubsystem.MoveTank(0, 0);
     }
   }
 

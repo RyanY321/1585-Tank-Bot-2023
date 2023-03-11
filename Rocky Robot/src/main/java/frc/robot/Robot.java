@@ -52,10 +52,10 @@ public class Robot extends TimedRobot
 
       m_chooser.setDefaultOption("Program One", programOneAuto);
       m_chooser.addOption("Program Two", programTwoAuto);
-      SmartDashboard.putData("Auto choices", m_chooser);
+      //SmartDashboard.putData("Auto choices", m_chooser);
 
       m_field = new Field2d();
-      SmartDashboard.putData("Sim Field", m_field);
+      //SmartDashboard.putData("Sim Field", m_field);
   }
 
   @Override
@@ -126,8 +126,8 @@ public class Robot extends TimedRobot
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {
-    m_robotContainer.SimPeriodic();
-    m_field.setRobotPose(m_robotContainer.GetPoseMeters());
+    // m_robotContainer.SimPeriodic();
+    // m_field.setRobotPose(m_robotContainer.GetPoseMeters());
 
   }
 

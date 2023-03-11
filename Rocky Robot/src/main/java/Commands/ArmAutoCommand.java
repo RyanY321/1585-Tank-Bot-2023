@@ -1,42 +1,36 @@
 package Commands;
 
+import Subsystems.Arm;
 import Subsystems.Drive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** Drive auto cammand used for autonomous movements */
-public class DriveAutoCommand extends CommandBase {
+public class ArmAutoCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Drive m_driveSubsystem; 
-  private double m_leftSpeed;
-  private double m_rightSpeed; 
+  private final Arm m_ArmSubsystem; 
   private boolean m_isFinished = false;
+  private double m_speed;
 
   /**
    * Creates a new Drive auto command.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveAutoCommand(Drive driveSubsystem, double leftSpeed, double rightSpeed) {
-    //super(waitTime);
-    m_driveSubsystem = driveSubsystem;
-    m_leftSpeed = leftSpeed;
-    m_rightSpeed = rightSpeed;
-
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(driveSubsystem);
+  public ArmAutoCommand(Arm armSubsystem, double speed) {
+    m_ArmSubsystem = armSubsystem;
+    m_speed = speed;
+    addRequirements(armSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //System.out.println("Auto Command initialized");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(String.format("Moving Auto : Move :  %f %f", m_leftSpeed,m_rightSpeed ));
-    m_driveSubsystem.MoveTank(m_leftSpeed,m_rightSpeed);
+    m_ArmSubsystem.LowerArm(m_speed);
     m_isFinished = true;
   }
   
@@ -44,11 +38,7 @@ public class DriveAutoCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if(interrupted)
-    {
-      System.out.println("Auto Motors stopped");
-      m_driveSubsystem.MoveTank(0, 0);
-    }
+   
   }
 
   // Returns true when the command should end.

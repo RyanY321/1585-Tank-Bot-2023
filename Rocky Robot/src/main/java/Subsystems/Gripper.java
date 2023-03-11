@@ -52,7 +52,7 @@ public class Gripper extends SubsystemBase
         m_pnumatics = pnumatics;
     }
 
-    private void OpenGripper()
+    public void OpenGripper()
     {
         System.out.println("Opening Gripper");
         m_pnumatics.TriggerGripperSolenoid(true,false);

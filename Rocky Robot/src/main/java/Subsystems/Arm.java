@@ -1,9 +1,6 @@
 package Subsystems;
 
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -64,7 +61,7 @@ public class Arm extends SubsystemBase
     public CommandBase liftArmCommand() {
         return run(
             () -> {
-                this.LiftArm(0);
+                //this.LiftArm(0);
             });
     }
 
@@ -117,7 +114,16 @@ public class Arm extends SubsystemBase
     {
         System.out.println("Lift Arm");
         m_liftMotor.set(speed);
-        //m_testLiftMotor.set(Relay.Value.kForward);
+    }
+
+      /**
+     * @implNote Lift the arm
+     * @param pulses
+     */
+    public void LowerArm(double speed)
+    {
+        System.out.println("Lower Arm");
+        m_liftMotor.set(speed);
     }
 
     /**
@@ -127,8 +133,7 @@ public class Arm extends SubsystemBase
     private void LowerArm()
     {
         System.out.println("Lower Arm");
-        m_liftMotor.set(-0.20);
-        // m_testLiftMotor.set(Relay.Value.kReverse);
+        m_liftMotor.set(-0.25);
     }
 
     private void StopArmLift()

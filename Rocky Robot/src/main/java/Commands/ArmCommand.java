@@ -1,5 +1,7 @@
 package Commands;
 
+import com.fasterxml.jackson.databind.ser.impl.FailingSerializer;
+
 import Subsystems.Arm;
 import Subsystems.IO;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -9,6 +11,8 @@ public class ArmCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Arm m_armSubsystem;
   private final IO m_controller;
+
+  private boolean isFinished = false;
     
 
   /**
@@ -28,13 +32,19 @@ public class ArmCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("Drive Command initialized");
+    //System.out.println("Arm Command initialized");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_armSubsystem.LiftArm(m_controller.GetLiftArmValue());
+    double val = m_controller.GetLiftArmValue();
+    if(val > 0)
+    {
+      m_armSubsystem.LiftArm(val);
+    }
+    isFinished = true;
+
   }
   
 

@@ -20,7 +20,7 @@ public class Drive extends SubsystemBase
         m_driveController = new DifferentialDrive(m_leftMotor, m_rightMotor);
         m_driveController.setSafetyEnabled(false);
         m_driveController.setExpiration(0.1);
-        m_driveController.setMaxOutput(1.0);
+        m_driveController.setMaxOutput(1);
     }
 
     public CommandBase moveArcadeCommand(double xSpeed, double zRotation) {
