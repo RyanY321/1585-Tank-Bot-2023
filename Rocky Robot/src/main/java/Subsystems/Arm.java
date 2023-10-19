@@ -133,7 +133,7 @@ public class Arm extends SubsystemBase
     private void LowerArm()
     {
         System.out.println("Lower Arm");
-        m_liftMotor.set(-0.25);
+        m_liftMotor.set(-0.50);
     }
 
     private void StopArmLift()

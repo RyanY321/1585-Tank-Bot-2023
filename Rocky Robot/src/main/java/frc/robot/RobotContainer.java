@@ -41,7 +41,7 @@ public class RobotContainer {
 
 
   private double rightAutoSpeed = .70;
-  private double leftAutoSpeed = rightAutoSpeed * 1.04;
+  private double leftAutoSpeed = rightAutoSpeed * .98;
 
   //-------Simulator Variables -----///
   //TODO: put these in a seperate subsystem
