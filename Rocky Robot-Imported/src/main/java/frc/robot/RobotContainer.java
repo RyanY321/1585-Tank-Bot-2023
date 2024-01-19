@@ -11,7 +11,7 @@ import Commands.ArmAutoCommand;
 import Commands.ArmCommand;
 import Commands.DriveAutoCommand;
 import Subsystems.Arm;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -29,7 +29,7 @@ public class RobotContainer {
   private Drive m_driveController = new Drive(0, 1);
   private Pnumatics m_pnumatics = new Pnumatics();
   private Gripper m_gripper = new Gripper(m_pnumatics);
-  private Arm m_arm = new Arm(5, 3);
+  private Arm m_arm = new Arm(5, 4);
 
   private ArmCommand m_ArmCommand = new ArmCommand(m_arm, m_controller);
   private DriveCommand m_DriveCommand = new DriveCommand(m_driveController, m_controller);
@@ -181,7 +181,7 @@ private DifferentialDriveOdometry m_odometry;
    *
    * @return the command to run in autonomous
    */
-  public CommandBase getAutonomousCommand(String selectedAuto) {
+  public Command getAutonomousCommand(String selectedAuto) {
 
       System.out.println(String.format("Getting autonomous program for selected, %s", selectedAuto));  
       return m_progOneAuto;
